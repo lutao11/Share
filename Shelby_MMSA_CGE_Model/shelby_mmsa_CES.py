@@ -2125,7 +2125,7 @@ for ittr in range(iNum):
 
 #iNum = 1 # dynamic model itterations
 
-sims = pd.read_csv(os.path.join(filePath, 'SIMS 500.csv'), index_col=0)
+sims = pd.read_csv(os.path.join(filePath, 'sector_shocks.csv'), index_col=0)
 iNum = 1
 #iNum = len(sims.columns)
 KS00 = KS0.copy()

@@ -1990,7 +1990,7 @@ for ittr in range(iNum):
  ######## The following is for random shocks. ########  
 '''
 #iNum = 1 # dynamic model itterations
-sims = pd.read_csv(os.path.join(filePath, 'Simulation_Data.csv'), index_col=0)
+sims = pd.read_csv(os.path.join(filePath, 'sector_shocks.csv'), index_col=0)
 iNum = 1
 #iNum = len(sims.columns)
 KS00 = KS0.copy()
