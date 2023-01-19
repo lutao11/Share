@@ -2063,6 +2063,7 @@ KS00 = KS0.copy()
 
 for num in range(iNum):
     KS0.loc[K,I] = KS00.loc[K,I].mul(sims.iloc[:,num])
+    KS0 = KS0.fillna(0.0)
     run_solver(filename, tmp)
 
 exec(open(os.path.join(modelPath, "salt_lake_output.py")).read())
