@@ -288,6 +288,12 @@ FG = ['COUNTY', 'STATE', 'FED']
 # HOUSING SERVICE DEMAND
 HSD = ['HS1A', 'HS2A', 'HS3A', 'HS4A', 'HS1B', 'HS2B', 'HS3B', 'HS4B']
 
+# HOUSING SERVICES
+HSSET = ['HS1A', 'HS2A', 'HS3A', 'HS4A', 'HS1B', 'HS2B', 'HS3B', 'HS4B']
+
+# HOUSING SERVICES 2 & 3
+HS23SET = ['HS2A', 'HS3A', 'HS4A', 'HS2B', 'HS3B', 'HS4B']
+
 #ETA              ELASTICITIES
 ETA = ['ETAL1','ETAI1','ETALB1','ETAPIT','ETAPT','ETARA','NRPG','ETAYD','ETAU','ETAM','ETAE','ETAY','ETAOP']
 
@@ -415,6 +421,7 @@ TAXS1 = pd.Series(index=GNL, dtype="float64").fillna(0.0)
 
 # ELASTICITIES AND TAX DATA IMPOSED
 LAMBDA = pd.DataFrame(index=I, columns=I).fillna(0.0)
+LAMBDAH = pd.DataFrame(index=HSD, columns=HSD).fillna(0.0)
 BETA = pd.DataFrame(index=I, columns=H).fillna(0.0)
 BETAH = pd.DataFrame(index=HSD, columns=H).fillna(0.0)
 ETAD = pd.Series(index=I, dtype="float64").fillna(0.0)
@@ -495,6 +502,7 @@ KPFOR0 = pd.Series(index=K, dtype="float64").fillna(0.0)
 
 GVFOR0 = pd.Series(index=G, dtype="float64").fillna(0.0)
 P0 = pd.Series(index=IG, dtype="float64").fillna(0.0)
+PH0 = pd.Series(index=HSD, dtype="float64").fillna(0.0)
 PD0 = pd.Series(index=I, dtype="float64").fillna(0.0)
 PVA0 = pd.Series(index=I, dtype="float64").fillna(0.0)
 PW0 = pd.Series(index=I, dtype="float64").fillna(0.0)
@@ -652,6 +660,8 @@ BETAH.loc[HSD,H] = MISC.loc[HSD,'ETAY']
 
 LAMBDA.loc[I, I] = MISC.loc[I, 'ETAOP']
 
+LAMBDAH.loc[HSD, HSD] = MISC.loc[HSD, 'ETAOP']
+
 ETAE.loc[I] = MISC.loc[I,'ETAE']
 
 ETAM.loc[I] = MISC.loc[I,'ETAM']
@@ -754,6 +764,7 @@ IGT0.loc[G, GX] = SAM.loc[G, GX]
 
 PW0.loc[I] = 1.0
 PWM0.loc[I] = 1.0
+PH0.loc[HSD] = 1.0
 P0.loc[I] = 1.0
 PD0.loc[I] = 1.0
 CPI0.loc[H] = 1.0
@@ -1374,11 +1385,11 @@ def set_equation(filename):
   print(VEQ.test(vars.initialVals))
   # print(VEQ)
 
-#   YFEQL(F).. Y(F) =E= SUM(IG, R(F,IG)* RA(F)*FD(F,IG));
-  print('YFEQL(F)')
-  line = (R.loc(F,IG)* RA.loc(F)*FD.loc(F,IG)).sum(IG)
+#   YFEQL(L).. Y(L) =E= SUM(IG, R(L,IG)* RA(L)*FD(L,IG));
+  print('YFEQL(L)')
+  line = (R.loc(L,IG)* RA.loc(L)*FD.loc(L,IG)).sum(IG)
 
-  YFEQL = (line - Y.loc(F))
+  YFEQL = (line - Y.loc(L))
   YFEQL.write(count,filename)
   print(YFEQL.test(vars.initialVals))
   # print(YFEQL)
@@ -1997,6 +2008,7 @@ KS00 = KS0.copy()
 
 for num in range(iNum):
     KS0.loc[K,I] = KS00.loc[K,I].mul(sims.iloc[:,num])
+    KS0 = KS0.fillna(0.0)
     run_solver(filename, tmp)
 
 exec(open(os.path.join(modelPath, "lumberton_output.py")).read())
