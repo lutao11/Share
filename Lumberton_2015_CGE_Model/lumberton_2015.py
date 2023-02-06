@@ -1758,10 +1758,10 @@ def set_equation(filename):
   # print(TDEQ)
   
   #GSEQJ1('CYGF').. S('CYGF')=E= Y('CYGF') -  Y('CYGF');
-  print('GSEQJ1(\'CYGF\')')
-  GSEQJ1 = S.loc(['CYGF']) - Y.loc(['CYGF']) + Y.loc(['CYGF'])
-  GSEQJ1.write(count,filename)
-  print(GSEQJ1.test(vars.initialVals))
+#  print('GSEQJ1(\'CYGF\')')
+#  GSEQJ1 = S.loc(['CYGF']) - Y.loc(['CYGF']) + Y.loc(['CYGF'])
+#  GSEQJ1.write(count,filename)
+#  print(GSEQJ1.test(vars.initialVals))
   
 
 #  SPIEQ.. SPI =E= SUM(H, Y(H)) + SUM((H,G), TP(H,G)*HH(H)) + SUM(H, PRIVRET(H)*HH(H));
