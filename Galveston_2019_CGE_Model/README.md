@@ -1,4 +1,4 @@
-# Salt Lake CGE Model for the Year of 2019
+# Galveston CGE Model for the Year of 2019
 
 ## Introduction
 
